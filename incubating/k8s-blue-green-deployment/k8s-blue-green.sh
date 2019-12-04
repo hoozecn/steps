@@ -62,7 +62,7 @@ mainloop(){
     healthcheck
 
     echo "[DEPLOY SWITCH] Routing traffic to new color"
-    kubectl get service $SERVICE_NAME -o=yaml --namespace=${NAMESPACE} | sed -e "s/$CURRENT_VERSION/$NEW_VERSION/g" | kubectl apply --namespace=${NAMESPACE} -f - 
+    kubectl get service $SERVICE_NAME -o=yaml --namespace=${NAMESPACE} | sed -e "s/$CURRENT_VERSION/$NEW_VERSION/g" | sed -E -- "s/image: (.*):(.*)/image: \1:$NEW_VERSION/g" | kubectl apply --namespace=${NAMESPACE} -f - 
      
 
     echo "[DEPLOY CLEANUP] Removing previous color"
