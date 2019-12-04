@@ -119,6 +119,7 @@ copy_deployment(){
 
     #Replace docker image
     sed -Ei -- "s/$CURRENT_VERSION/$NEW_VERSION/g" $WORKING_VOLUME/canary_deployment.yaml
+    sed -Ei -- "s/image: (.*):(.*)/image: \1:$NEW_VERSION/g" $WORKING_VOLUME/canary_deployment.yaml
     echo "[CANARY INFO] Replaced image name"
     echo "[CANARY INFO] Production deployment is $PROD_DEPLOYMENT, canary is $CANARY_DEPLOYMENT"
 }
